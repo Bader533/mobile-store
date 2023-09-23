@@ -44,9 +44,11 @@ Route::group(
     function () {
 
         Route::middleware('guest:branch,admin,employee,customer')->group(function () {
+
             Route::get('/login', function () {
                 return redirect('/customer/login');
             })->name('login');
+
             Route::get('{guard}/login', [AuthController::class, 'showLogin'])->name('dashboard.login');
             Route::post('login', [AuthController::class, 'login'])->name('login');
             Route::get('{guard}/reset-password', [AuthController::class, 'resetPassword'])->name('reset.password');

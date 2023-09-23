@@ -405,4 +405,7 @@ return [
     "add_check" => "Add Check",
     "print_check" => "Print Check",
 
+    "apps" => "Apps",
+    "hr" => "HR",
+
 ];

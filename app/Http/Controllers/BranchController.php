@@ -181,7 +181,10 @@ class BranchController extends Controller
             abort(403);
         } else {
             $query = $request->get('search');
-            $branches = Branch::where('name', 'like', '%' . $query . '%')->orderBy('id', 'desc')->get();
+            $branches = Branch::where('name_en', 'like', '%' . $query . '%')
+                ->orWhere('name_ar', 'like', '%' . $query . '%')
+                ->orWhere('phone', 'like', '%' . $query . '%')
+                ->orderBy('id', 'desc')->get();
             return view('dashboard.branch.search', ['branches' => $branches]);
         }
     }

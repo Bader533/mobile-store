@@ -54,7 +54,6 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //updated
         if (!Gate::allows('Create-Customer')) {
             abort(403);
         } else {
@@ -64,7 +63,7 @@ class CustomerController extends Controller
                 'mother_name' => 'string | min:3 | max:40',
 
                 'id_number' => 'required | numeric | digits:9 | unique:customers,id_number',
-                'address' => 'string | min:3 | max:40',
+                'address' => 'required | string',
 
                 'phone' => 'required | numeric | digits:12',
                 'other_phone' => 'nullable | numeric | digits:12',
@@ -218,7 +217,7 @@ class CustomerController extends Controller
                 'mother_name' => 'string | min:3 | max:40',
 
                 'id_number' => 'required | numeric | digits:9 | unique:customers,id_number,' . $customer->id,
-                'address' => 'string | min:3 | max:40',
+                'address' => 'required | string',
 
                 'phone' => 'required | numeric | digits:12',
                 'other_phone' => 'nullable | numeric | digits:12',

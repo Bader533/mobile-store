@@ -92,6 +92,7 @@ class AuthController extends Controller
             }
             $password = Str::random(10);
             $guard->password = Hash::make($password);
+            $isSaveed = $guard->save();
             //whatsapp
             $details = [
                 'to' => '+' . $guard->phone,

@@ -212,104 +212,104 @@
 
 <body>
     @foreach ($monthyInstallment as $monthyInstallment)
-    <div class="page_draft" id="page_draft">
+        <div class="page_draft" id="page_draft">
 
-        <div class="content">
-            <p class="title">{{$ar->utf8Glyphs('كمــــــبيــــــالة و الـــــــــدفع بـــــــها')}}</p><br>
-            <div id="draft_id" class="card-header border-0 pt-6">
+            <div class="content">
+                <p class="title">{{ $ar->utf8Glyphs('كمــــــبيــــــالة و الـــــــــدفع بـــــــها') }}</p><br>
+                <div id="draft_id" class="card-header border-0 pt-6">
 
-                <div class="card-price-number">
+                    <div class="card-price-number">
 
-                    {{-- <div class="price_all">
+                        {{-- <div class="price_all">
                         <input type="text">
 
                     </div> --}}
-                    <div class="price_all">{{$ar->utf8Glyphs('المـبلـغ')}}</div>
-                    <div class="input_price"> <span>&#8362;</span>
-                        {{$monthyInstallment->price}}</div>
+                        <div class="price_all">{{ $ar->utf8Glyphs('المـبلـغ') }}</div>
+                        <div class="input_price"> <span>&#8362;</span>
+                            {{ $monthyInstallment->price }}</div>
+                    </div>
+
+                    <div class="card-title">
+                        ({{ $monthyInstallment->id }})
+                        {{ $ar->utf8Glyphs('الرقم :') }}
+                    </div>
+
                 </div>
+                <div class="draft">
 
-                <div class="card-title">
-                    ({{$monthyInstallment->id}}) {{$ar->utf8Glyphs('الرقم :')}}
-                </div>
+                    <p class="get_draft">
+                        ({{ date('Y-m-d', strtotime($monthyInstallment->pay_date)) }}){{ $ar->utf8Glyphs('تستحق فى :') }}
+                    </p>
 
-            </div>
-            <div class="draft">
+                    <p class="owner_id">
 
-                <p class="get_draft">({{date('Y-m-d', strtotime($monthyInstallment->pay_date))
-                    }}){{$ar->utf8Glyphs('تستحق فى :')}}
-                </p>
+                        {{ $monthyInstallment->contract->order->customer->id_number }}
 
-                <p class="owner_id">
-
-                    {{$monthyInstallment->contract->order->customer->id_number}}
-
-                    {{$ar->utf8Glyphs('هوية رقم :')}}
+                        {{ $ar->utf8Glyphs('هوية رقم :') }}
 
 
-                </p>
+                    </p>
 
-                <p class="owner_draft">
-                    {{$ar->utf8Glyphs($monthyInstallment->contract->order->customer->name_ar)}}
-                    &nbsp;
-                    {{$ar->utf8Glyphs('انا المقر :')}}
-                <div class="line"></div>
-                <div class="line_five"></div>
-                </p>
-                <br>
-                <p class="draft_name">
-                    {{$ar->utf8Glyphs('اليزن اشرف احمد اليازوري')}}
+                    <p class="owner_draft">
+                        {{ $ar->utf8Glyphs($monthyInstallment->contract->order->customer->name_ar) }}
+                        &nbsp;
+                        {{ $ar->utf8Glyphs('انا المقر :') }}
+                    <div class="line"></div>
+                    <div class="line_five"></div>
+                    </p>
+                    <br>
+                    <p class="draft_name">
+                        {{ $ar->utf8Glyphs('اليزن اشرف احمد اليازوري') }}
 
-                    {{$ar->utf8Glyphs('أتعهد و التزم بموجب هذه الكمبيالة ان ادفع الى/')}}
-                <div class="line_two"></div>
-                </p>
-                <p class="draft_letter_price">
+                        {{ $ar->utf8Glyphs('أتعهد و التزم بموجب هذه الكمبيالة ان ادفع الى/') }}
+                    <div class="line_two"></div>
+                    </p>
+                    <p class="draft_letter_price">
 
-                    <?php
-                    $number = $monthyInstallment->price;
-                    $formatter = new \NumberFormatter('ar', \NumberFormatter::SPELLOUT);
-                    $letters_price = $formatter->format($number);
+                        <?php
+                        $number = $monthyInstallment->price;
+                        $formatter = new \NumberFormatter('ar', \NumberFormatter::SPELLOUT);
+                        $letters_price = $formatter->format($number);
                         ?>
 
-                    {{$ar->utf8Glyphs('فقط لا غير')}}
-                    {{$ar->utf8Glyphs('شيكل')}}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{$ar->utf8Glyphs($letters_price)}}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {{ $ar->utf8Glyphs('فقط لا غير') }}
+                        {{ $ar->utf8Glyphs('شيكل') }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {{ $ar->utf8Glyphs($letters_price) }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                    {{$ar->utf8Glyphs('المبلغ المرقوم أعلاه و قدره :')}}
-                <div class="line_three"></div>
-                </p>
-                <p class="draft_product_name">
-                    {{$ar->utf8Glyphs($monthyInstallment->contract->order->product->name_ar)}}
-                    {{$ar->utf8Glyphs('و هذا عن :')}}
-                <div class="line_four"></div>
-                </p>
-                <br><br>
-                <center>
-                    <table style="width: 100%;">
-                        <tr>
+                        {{ $ar->utf8Glyphs('المبلغ المرقوم أعلاه و قدره :') }}
+                    <div class="line_three"></div>
+                    </p>
+                    <p class="draft_product_name">
+                        {{ $ar->utf8Glyphs($monthyInstallment->contract->order->product->name_ar) }}
+                        {{ $ar->utf8Glyphs('و هذا عن :') }}
+                    <div class="line_four"></div>
+                    </p>
+                    <br><br>
+                    <center>
+                        <table style="width: 100%;">
+                            <tr>
 
-                            <td style="text-align: center;">{{$ar->utf8Glyphs('شاهد')}}</td>
+                                <td style="text-align: center;">{{ $ar->utf8Glyphs('شاهد') }}</td>
 
-                            <td style="text-align: center;">{{$ar->utf8Glyphs('توقيع المدين')}}</td>
-                            @if ($monthyInstallment->contract->order->installment->id == 2 ||
-                            $monthyInstallment->contract->order->installment->id == 4
-                            )
-
-                            <td style="text-align: center;">{{$ar->utf8Glyphs('توقيع الكفيل')}}</td>
-                            @endif
-                        </tr>
-                    </table>
-                    <br><br><br><br><br>
-                </center>
-                <p class="date">
-                    {{date("Y/m/d")}}
-                    {{$ar->utf8Glyphs('التاريخ :')}}
-                </p>
+                                <td style="text-align: center;">{{ $ar->utf8Glyphs('توقيع المدين') }}</td>
+                                @if (
+                                    $monthyInstallment->contract->order->installment->id == 2 ||
+                                        $monthyInstallment->contract->order->installment->id == 4)
+                                    <td style="text-align: center;">{{ $ar->utf8Glyphs('توقيع الكفيل') }}</td>
+                                @endif
+                            </tr>
+                        </table>
+                        <br><br><br><br><br>
+                    </center>
+                    <p class="date">
+                        {{ date('Y/m/d') }}
+                        {{ $ar->utf8Glyphs('التاريخ :') }}
+                    </p>
+                </div>
             </div>
-        </div>
-    </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     @endforeach
 </body>
 

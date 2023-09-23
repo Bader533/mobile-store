@@ -11,6 +11,8 @@ class Customer extends Authenticatable
 {
     use HasFactory, HasRoles;
 
+    protected $appends = ['customer_image'];
+
     public function object()
     {
         return $this->morphTo();
@@ -51,5 +53,15 @@ class Customer extends Authenticatable
     {
         $maskedPhoneNumber = substr($this->phone, 3);
         return $maskedPhoneNumber;
+    }
+
+    public function getCustomerImageAttribute()
+    {
+        $image = $this->images->first();
+        if ($image == null) {
+            return 'assets/media/avatars/300-1.jpg';
+        } else {
+            return $image->url;
+        }
     }
 }

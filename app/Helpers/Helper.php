@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\Tracking;
 use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class Helper
@@ -24,8 +25,12 @@ class Helper
             $guard = Auth::guard('customer')->user();
         }
 
+        $palestineTime = Carbon::now('Asia/Gaza');
+        $formattedTime = $palestineTime->format('H:i:s');
+
         $tracking = new Tracking();
         $tracking->activity = $activity;
+        $tracking->time = $formattedTime;
         $guard->trackings()->save($tracking);
     }
 

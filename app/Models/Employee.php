@@ -11,6 +11,8 @@ class Employee extends Authenticatable
 {
     use HasFactory, HasRoles;
 
+    protected $appends = ['employee_image'];
+
     public function images()
     {
         return $this->morphMany(Image::class, 'object', 'object_type', 'object_id', 'id');
@@ -34,5 +36,15 @@ class Employee extends Authenticatable
     public function notes()
     {
         return $this->morphMany(Note::class, 'object', 'object_type', 'object_id', 'id');
+    }
+
+    public function getEmployeeImageAttribute()
+    {
+        $image = $this->images->first();
+        if ($image == null) {
+            return 'assets/media/avatars/300-1.jpg';
+        } else {
+            return $image->url;
+        }
     }
 }
