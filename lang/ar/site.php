@@ -300,10 +300,10 @@ return [
     "all_operations" => "جميع العمليات",
     "add_date" => "اضف التاريخ",
     "my_profile" => "حسابى",
-    "contracts" => "عقود الايجار",
+    "contracts" => "عقود",
     "owners" => "الملاك",
     "owner_info" => "بيانات الملاك",
-    "no_contracts" => "لا يوجد عقود ايجار",
+    "no_contracts" => "لا يوجد عقود",
     "no_rating" => "لا يوجد تقييم للمستاجر",
 
     "payment" => "دفع الإيجار الشهري",
@@ -457,4 +457,7 @@ return [
 
     "apps" => "التطبيقات",
     "hr" => "الموارد البشرية",
+    "select_option" => "حدد اختيار",
+
+    "lawyer_fees" => "اتعاب المحامى",
 ];

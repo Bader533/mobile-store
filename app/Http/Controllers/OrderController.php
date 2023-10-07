@@ -72,6 +72,7 @@ class OrderController extends Controller
                 'customer_id' => 'nullable | required_if:installment_method,2,3,4 | numeric',
                 'guarantor_id' => 'nullable | required_if:installment_method,2,4 | numeric',
                 'company_name' => 'nullable | required_if:installment_method,5 | string',
+                'lawyer_fees' => 'nullable | numeric',
 
             ]);
             if (!$validator->fails()) {
@@ -99,6 +100,7 @@ class OrderController extends Controller
                 $order->branch_id = $request->input('branch_id');
                 $order->product_id = $request->input('product_id');
                 $order->serial_number = $request->input('serial_number');
+                $order->lawyer_fees = $request->input('lawyer_fees');
 
                 if ($request->input('installment_method') == 5) {
                     $order->customer_id = $request->input('company_name');
@@ -180,6 +182,7 @@ class OrderController extends Controller
                 'company_name' => 'nullable | required_if:installment_method,5 | string',
                 'installment_date' => 'required ',
                 'status' => 'required | string',
+                'lawyer_fees' => 'nullable | numeric',
 
             ]);
             if (!$validator->fails()) {
@@ -193,6 +196,7 @@ class OrderController extends Controller
                 $order->branch_id = $request->input('branch_id');
                 $order->product_id = $request->input('product_id');
                 $order->serial_number = $request->input('serial_number');
+                $order->lawyer_fees = $request->input('lawyer_fees');
                 if ($request->input('installment_method') == 5) {
                     $order->customer_id = $request->input('company_name');
                 } else {

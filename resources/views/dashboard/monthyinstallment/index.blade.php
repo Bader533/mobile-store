@@ -56,7 +56,7 @@
                         </div>
                         <!--begin::Add product-->
                         <a class="btn btn-primary">{{ __('site.total_installments') }} :
-                            {{ $monthyInstallment->count() }}</a>
+                            {{ $monthyInstallmentCount }}</a>
                         <!--end::Add product-->
                     </div>
 
@@ -112,23 +112,23 @@
                                         <td>
                                             @if ($monthy->status == 'waiting')
                                                 <div class="badge badge-light-warning">
-                                                    Waiting
+                                                    {{ __('site.waiting') }}
                                                 </div>
                                             @elseif($monthy->status == 'paid late')
                                                 <div class="badge badge-light-danger fw-bold">
-                                                    Paid Late
+                                                    {{ __('site.paidlate') }}
                                                 </div>
                                             @elseif($monthy->status == 'paid on time')
                                                 <div class="badge badge-light-success">
-                                                    Paid On Time
+                                                    {{ __('site.paidontime') }}
                                                 </div>
                                             @elseif($monthy->status == 'paid early')
                                                 <div class="badge badge-light-primary">
-                                                    Paid Early
+                                                    {{ __('site.paidearly') }}
                                                 </div>
                                             @elseif($monthy->status == 'late')
                                                 <div class="badge badge-light-dark">
-                                                    Late
+                                                    {{ __('site.late') }}
                                                 </div>
                                             @endif
                                         </td>

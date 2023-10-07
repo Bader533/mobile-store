@@ -407,5 +407,9 @@ return [
 
     "apps" => "Apps",
     "hr" => "HR",
+    "select_option" => "Select an option",
+
+    "lawyer_fees" => "Lawyer Fees",
+
 
 ];

@@ -15,8 +15,7 @@
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-xxl">
             <!--begin::Form-->
-            <form id="kt_ecommerce_edit_order_form" class="form d-flex flex-column flex-lg-row"
-                data-kt-redirect="../../demo1/dist/apps/ecommerce/sales/listing.html">
+            <form id="kt_ecommerce_edit_order_form" class="form d-flex flex-column flex-lg-row">
                 <!--begin::Aside column-->
                 <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
                     <!--begin::Order details-->
@@ -149,6 +148,16 @@
                                 </div>
                                 <!--end::branch-->
 
+                                <!--begin::lawyer_fees-->
+                                <div class="fv-row">
+
+                                    <label class="required form-label">{{ __('site.lawyer_fees') }}</label>
+
+                                    <input type="text" name="lawyer_fees" id="lawyer_fees" class=" form-control mb-2"
+                                        required />
+                                </div>
+                                <!--end::lawyer_fees-->
+
                             </div>
                         </div>
                         <!--end::Card header-->
@@ -156,6 +165,7 @@
                     <!--end::Order details-->
                 </div>
                 <!--end::Aside column-->
+
                 <!--begin::Main column-->
                 <div class="d-flex flex-column flex-lg-row-fluid gap-7 gap-lg-10">
                     <!--begin::customer && serial number-->
@@ -448,6 +458,7 @@
                     serial_number: document.getElementById('serial_number').value,
                     company_name: document.getElementById('company_name').value,
                     status: document.getElementById('status').value,
+                    lawyer_fees: document.getElementById('lawyer_fees').value,
                 })
                 .then(function(response) {
                     window.location.href = '/order';

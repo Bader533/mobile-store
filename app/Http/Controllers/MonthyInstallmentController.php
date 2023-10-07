@@ -26,6 +26,7 @@ class MonthyInstallmentController extends Controller
             abort(403);
         } else {
 
+            $monthyInstallmentCount = MonthyInstallment::whereIn('status', ['waiting', 'late'])->count();
             $monthyInstallment = MonthyInstallment::whereIn('status', ['waiting', 'late'])->orderByRaw("YEAR(pay_date), MONTH(pay_date), DAY(pay_date)")->paginate(10);
 
             if ($monthyInstallment == null) {
@@ -37,7 +38,7 @@ class MonthyInstallmentController extends Controller
                 'dashboard.monthyinstallment.index',
                 [
                     'monthyInstallment' => $monthyInstallment,
-                    // 'name' => $name->order->customer->name,
+                    'monthyInstallmentCount' => $monthyInstallmentCount,
 
                 ]
             );
@@ -103,9 +104,7 @@ class MonthyInstallmentController extends Controller
             if (!$validator->fails()) {
 
                 $monthyInstallment = MonthyInstallment::find($id);
-                $lastMonthyInstallment = MonthyInstallment::where('contract_id', $monthyInstallment->contract_id)->orderBy('pay_date', 'desc')->first();
-                //
-                // dd($lastMonthyInstallment->contract->order->customer->phone);
+
                 if ($monthyInstallment == null) {
                     return view('error-404');
                 }
@@ -114,6 +113,7 @@ class MonthyInstallmentController extends Controller
                 $payDate = date('Y-m-d', strtotime($monthyInstallment->pay_date));
                 $currentDate = Carbon::now()->format('Y-m-d'); //current date
 
+                //date of pay
                 if (Carbon::parse($currentDate)->greaterThan($payDate)) {
                     $monthyInstallment->status = 'paid late';
                 } elseif (Carbon::parse($currentDate)->equalTo($payDate)) {
@@ -122,23 +122,34 @@ class MonthyInstallmentController extends Controller
                     $monthyInstallment->status = 'paid early';
                 }
 
-                if ($monthyInstallment->price == $request->input('price')) {
+                $paidAmount = $request->input('price');
+                $installmentAmount = $monthyInstallment->price;
+                $difference =  $installmentAmount - $paidAmount;
 
-                    $monthyInstallment->price  = $request->input('price');
-                    //
-                } elseif ($monthyInstallment->price < $request->input('price')) {
+                $monthyInstallment->price = $paidAmount;
 
-                    $difference = $monthyInstallment->price - $request->input('price');
-                    $monthyInstallment->price = $request->input('price');
-                    $lastMonthyInstallment->price = $lastMonthyInstallment->price - abs($difference);
-                    $lastMonthyInstallment->save();
-                } elseif ($monthyInstallment->price > $request->input('price')) {
+                if ($difference > 0) {
 
-                    $difference = $monthyInstallment->price - $request->input('price');
-                    $monthyInstallment->price = $request->input('price');
-                    $lastMonthyInstallment->price = $lastMonthyInstallment->price + abs($difference);
-                    $lastMonthyInstallment->save();
+                    $lastMonthyInstallment = MonthyInstallment::where('contract_id', $monthyInstallment->contract_id)
+                        ->where('price', '!=', 0)
+                        ->orderBy('pay_date', 'desc')->first();
+
+                    if ($lastMonthyInstallment) {
+                        $lastMonthyInstallment->price += $difference;
+                        $lastMonthyInstallment->save();
+                    }
+                } elseif ($difference < 0) {
+
+                    $lastMonthyInstallment = MonthyInstallment::where('contract_id', $monthyInstallment->contract_id)
+                        ->where('price', '!=', 0)
+                        ->orderBy('pay_date', 'desc')->first();
+
+                    if ($lastMonthyInstallment) {
+                        $lastMonthyInstallment->price -= abs($difference);
+                        $lastMonthyInstallment->save();
+                    }
                 }
+
 
                 $monthyInstallment->object_type = $guard['modelClass'];
                 $monthyInstallment->object_id = $guard['id'];

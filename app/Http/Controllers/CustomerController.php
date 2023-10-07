@@ -149,17 +149,13 @@ class CustomerController extends Controller
         if (!Gate::allows('Show-Customer')) {
             abort(403);
         } else {
-            $onTimePaid = MonthyInstallment::whereBelongsTo($customer)->where('status', '=', 'paid on time')->count();
-            $paidLate = MonthyInstallment::whereBelongsTo($customer)->where('status', '=', 'paid late')->count();
-            $paidEarly = MonthyInstallment::whereBelongsTo($customer)->where('status', '=', 'paid early')->count();
-
-            $unpaid = MonthyInstallment::whereBelongsTo($customer)->where('status', '=', 'waiting')->count();
-            $paidup = MonthyInstallment::whereBelongsTo($customer)->where('status', '!=', 'waiting')->get();
+            // $monthy = MonthyInstallment::whereBelongsTo($customer)->first();
+            $paidup = MonthyInstallment::whereBelongsTo($customer)->whereNotIn('status',  ['waiting', 'late'])->paginate(5);
             $contracts = Contract::whereRelation('order', 'customer_id',   $customer->id)
-                ->orderBy('id', 'desc')->get();
+                ->orderBy('id', 'desc')->paginate(4);
 
             $guarantorInContracts = Contract::whereRelation('order', 'guarantor_id',   $customer->id)
-                ->orderBy('id', 'desc')->get();
+                ->orderBy('id', 'desc')->paginate(4);
 
             $permissions = Permission::where('guard_name', '=', 'Customer')->get();
             $rolePermissions = $customer->getAllPermissions();
@@ -174,12 +170,9 @@ class CustomerController extends Controller
             }
             $trackings = $customer->trackings()->paginate(5);
             $logtrack =  Helper::logTracking('show customer details ,name' . $customer->name);
+
             return view('dashboard.customer.show', [
                 'customer' => $customer,
-                'ontimepaid' => $onTimePaid,
-                'paidearly' => $paidEarly,
-                'paidlate' => $paidLate,
-                'unpaid' => $unpaid,
                 'paidup' => $paidup,
                 'contracts' => $contracts,
                 'guarantorIC' => $guarantorInContracts,

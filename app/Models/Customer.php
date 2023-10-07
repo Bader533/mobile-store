@@ -64,4 +64,43 @@ class Customer extends Authenticatable
             return $image->url;
         }
     }
+
+    // paid
+    public function getPaidCountAttribute($customer)
+    {
+        return $this->monthyInstallments()->whereNotIn('status',  ['waiting', 'late'])->count();
+    }
+
+    public function getTotalPaidAttribute()
+    {
+        return  $this->monthyInstallments()->whereNotIn('status',  ['waiting', 'late'])->sum('price');
+    }
+    //end paid
+
+    //un-paid
+    public function getUnpaidCountAttribute()
+    {
+        return $this->monthyInstallments()->whereIn('status',  ['waiting', 'late'])->count();
+    }
+
+    public function getTotalUnpaidAttribute()
+    {
+        return $this->monthyInstallments()->whereIn('status',  ['waiting', 'late'])->sum('price');
+    }
+    //end un-paid
+
+    public function getOnTimePaidAttribute()
+    {
+        return $this->monthyInstallments()->where('status',  'paid on time')->count();
+    }
+
+    public function getPaidLateAttribute()
+    {
+        return $this->monthyInstallments()->where('status',  'paid late')->count();
+    }
+
+    public function getPaidEarlyAttribute()
+    {
+        return $this->monthyInstallments()->where('status',  'paid early')->count();
+    }
 }

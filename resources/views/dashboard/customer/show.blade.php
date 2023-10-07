@@ -198,37 +198,33 @@
                                                         <td>&#8362;{{ $contract->order->product->price }}</td>
                                                         <!--end::Amount=-->
                                                         <!--begin::Date=-->
-                                                        <td>{{ $contract->created_at }}</td>
+                                                        <td>{{ date('m/d/Y', strtotime($contract->created_at)) }}</td>
                                                         <!--end::Date=-->
                                                         <!--begin::Action=-->
-                                                        <td class="pe-0 text-end">
-                                                            <a class="btn btn-sm btn-light btn-active-light-primary"
-                                                                data-kt-menu-trigger="click"
-                                                                data-kt-menu-placement="bottom-end">Actions
-                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                                <span class="svg-icon svg-icon-5 m-0">
-                                                                    <svg width="24" height="24"
-                                                                        viewBox="0 0 24 24" fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                                            fill="currentColor" />
-                                                                    </svg>
-                                                                </span>
-                                                                <!--end::Svg Icon-->
-                                                            </a>
-                                                            <!--begin::Menu-->
-                                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                                                data-kt-menu="true">
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="{{ route('monthyinstallment.index', $contract->id) }}"
-                                                                        class="menu-link px-3">{{ __('site.show') }}</a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-                                                            </div>
-                                                            <!--end::Menu-->
-                                                        </td>
+                                                        @can('Show-Contract')
+                                                            <td class="text-end">
+                                                                <a href="{{ route('contract.show', $contract->id) }}"
+                                                                    class="btn btn-icon btn-active-light-primary w-30px h-30px"
+                                                                    data-bs-toggle="tooltip" title="{{ __('site.show') }}"
+                                                                    data-kt-menu-trigger="click"
+                                                                    data-kt-menu-placement="bottom-end">
+                                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                                                    <span class="svg-icon svg-icon-3">
+                                                                        <svg width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <path
+                                                                                d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
+                                                                                fill="currentColor" />
+                                                                            <path opacity="0.3"
+                                                                                d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
+                                                                                fill="currentColor" />
+                                                                        </svg>
+                                                                    </span>
+                                                                    <!--end::Svg Icon-->
+                                                                </a>
+                                                            </td>
+                                                        @endcan
                                                         <!--end::Action=-->
                                                     </tr>
                                                     <!--end::Table row-->
@@ -241,6 +237,17 @@
                                         </tbody>
                                         <!--end::Table body-->
                                     </table>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div
+                                                class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                                                <div class="dataTables_paginate paging_simple_numbers"
+                                                    id="kt_ecommerce_products_table_paginate">
+                                                    {{ $contracts->links('pagination::bootstrap-4') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--end::Table-->
                                 </div>
                                 <!--end::Card body-->
@@ -297,7 +304,7 @@
                                                         <td>&#8362;{{ $contract->order->product->price }}</td>
                                                         <!--end::Amount=-->
                                                         <!--begin::Date=-->
-                                                        <td>{{ $contract->created_at }}</td>
+                                                        <td>{{ date('m/d/Y', strtotime($contract->created_at)) }}</td>
                                                         <!--end::Date=-->
                                                         <!--begin::Action=-->
                                                         <td class="pe-0 text-end">
@@ -340,6 +347,17 @@
                                         </tbody>
                                         <!--end::Table body-->
                                     </table>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div
+                                                class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                                                <div class="dataTables_paginate paging_simple_numbers"
+                                                    id="kt_ecommerce_products_table_paginate">
+                                                    {{ $guarantorIC->links('pagination::bootstrap-4') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--end::Table-->
                                 </div>
                                 <!--end::Card body-->
@@ -370,7 +388,7 @@
                                                 class="border border-dashed border-gray-300 w-150px rounded my-3 p-4 me-6">
                                                 <span class="fs-1 fw-bold text-gray-800 lh-1">
                                                     <span data-kt-countup="true" data-kt-countup="true"
-                                                        data-kt-countup-value="{{ $paidearly ?? '0' }}">0</span>
+                                                        data-kt-countup-value="{{ $customer->paid_early ?? '0' }}">0</span>
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                     <span class="svg-icon svg-icon-1 svg-icon-success">
                                                         <svg width="24" height="24" viewBox="0 0 24 24"
@@ -394,7 +412,7 @@
                                                 class="border border-dashed border-gray-300 w-125px rounded my-3 p-4 me-6">
                                                 <span class="fs-1 fw-bold text-gray-800 lh-1">
                                                     <span class="" data-kt-countup="true"
-                                                        data-kt-countup-value="{{ $paidlate ?? '0' }}">0</span>
+                                                        data-kt-countup-value="{{ $customer->paid_late ?? '0' }}">0</span>
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
                                                     <span class="svg-icon svg-icon-1 svg-icon-danger">
                                                         <svg width="24" height="24" viewBox="0 0 24 24"
@@ -418,7 +436,7 @@
                                                 class="border border-dashed border-gray-300 w-150px rounded my-3 p-4 me-6">
                                                 <span class="fs-1 fw-bold text-gray-800 lh-1">
                                                     <span data-kt-countup="true"
-                                                        data-kt-countup-value="{{ $ontimepaid ?? '0' }}"
+                                                        data-kt-countup-value="{{ $customer->on_time_paid ?? '0' }}"
                                                         data-kt-countup-prefix="">0</span>
                                                     <span class="text-primary">--</span>
                                                 </span>
@@ -427,9 +445,6 @@
                                             </div>
                                             <!--end::Col-->
                                         </div>
-                                        <!--end::Row-->
-                                        {{-- <a href="#" class="btn btn-sm btn-light-primary flex-shrink-0">Withdraw
-                                        Earnings</a> --}}
                                     </div>
                                     <!--end::Left Section-->
                                 </div>
@@ -444,14 +459,14 @@
                                 <div class="card-body py-0">
                                     <!--begin::Left Section-->
                                     <div class="d-flex flex-wrap flex-stack mb-5">
-                                        <!--begin::Row-->
+                                        <!--begin::paid-->
                                         <div class="d-flex flex-wrap">
                                             <!--begin::Col-->
                                             <div
                                                 class="border border-dashed border-gray-300 w-150px rounded my-3 p-4 me-6">
                                                 <span class="fs-1 fw-bold text-gray-800 lh-1">
                                                     <span data-kt-countup="true" data-kt-countup="true"
-                                                        data-kt-countup-value="{{ $paidup->count() ?? '0' }}">0</span>
+                                                        data-kt-countup-value="{{ $customer->paid_count ?? '0' }}">0</span>
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                     <span class="svg-icon svg-icon-1 svg-icon-success">
                                                         <svg width="24" height="24" viewBox="0 0 24 24"
@@ -472,10 +487,40 @@
                                             <!--end::Col-->
                                             <!--begin::Col-->
                                             <div
+                                                class="border border-dashed border-gray-300 w-150px rounded my-3 p-4 me-6">
+                                                <span class="fs-1 fw-bold text-gray-800 lh-1">
+                                                    <span data-kt-countup="true" data-kt-countup="true"
+                                                        data-kt-countup-value="{{ $customer->total_paid ?? '0' }}">0</span>
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                    <span class="svg-icon svg-icon-1 svg-icon-success">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect opacity="0.5" x="13" y="6"
+                                                                width="13" height="2" rx="1"
+                                                                transform="rotate(90 13 6)" fill="currentColor" />
+                                                            <path
+                                                                d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">
+                                                    {{ __('site.total') }}</span>
+                                            </div>
+                                            <!--end::Col-->
+
+                                        </div>
+                                        <!--end::paid-->
+
+                                        <!--begin::unpaid-->
+                                        <div class="d-flex flex-wrap">
+                                            <!--begin::Col-->
+                                            <div
                                                 class="border border-dashed border-gray-300 w-125px rounded my-3 p-4 me-6">
                                                 <span class="fs-1 fw-bold text-gray-800 lh-1">
                                                     <span class="" data-kt-countup="true"
-                                                        data-kt-countup-value="{{ $unpaid ?? '0' }}">0</span>
+                                                        data-kt-countup-value="{{ $customer->unpaid_count ?? '0' }}">0</span>
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
                                                     <span class="svg-icon svg-icon-1 svg-icon-danger">
                                                         <svg width="24" height="24" viewBox="0 0 24 24"
@@ -494,8 +539,34 @@
                                                     class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">{{ __('site.unpaid') }}</span>
                                             </div>
                                             <!--end::Col-->
+
+                                            <!--begin::Col-->
+                                            <div
+                                                class="border border-dashed border-gray-300 w-125px rounded my-3 p-4 me-6">
+                                                <span class="fs-1 fw-bold text-gray-800 lh-1">
+                                                    <span class="" data-kt-countup="true"
+                                                        data-kt-countup-value="{{ $customer->total_unpaid ?? '0' }}">0</span>
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+                                                    <span class="svg-icon svg-icon-1 svg-icon-danger">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect opacity="0.5" x="11" y="18"
+                                                                width="13" height="2" rx="1"
+                                                                transform="rotate(-90 11 18)" fill="currentColor" />
+                                                            <path
+                                                                d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z"
+                                                                fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </span>
+                                                <span
+                                                    class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">{{ __('site.total') }}</span>
+                                            </div>
+                                            <!--end::Col-->
                                         </div>
-                                        <!--end::Row-->
+                                        <!--end::unpaid-->
+
                                     </div>
                                     <!--end::Left Section-->
                                 </div>
@@ -578,6 +649,17 @@
                                                 <!--end::Tbody-->
                                             </table>
                                             <!--end::Table-->
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div
+                                                        class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                                                        <div class="dataTables_paginate paging_simple_numbers"
+                                                            id="kt_ecommerce_products_table_paginate">
+                                                            {{ $paidup->links('pagination::bootstrap-4') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!--end::Tab panel-->
                                     </div>
@@ -829,7 +911,7 @@
                                                         @if (!empty($customer->images->where('name', 'avatar')->first()))
                                                             <a class="btn btn-sm btn-light-primary"
                                                                 href="{{ asset($customer->images->where('name', 'avatar')->first()->url) }}"
-                                                                download="{{ $customer->images->where('name', 'avatar')->first()->name }}">
+                                                                download="{{ $customer->images->where('name', 'avatar')->first()->url }}">
                                                                 <span class="svg-icon svg-icon-3">
                                                                     <svg width="24" height="24"
                                                                         viewBox="0 0 24 24" fill="none"
@@ -868,7 +950,7 @@
                                                         @if (!empty($customer->images->where('name', 'account_statement')->first()))
                                                             <a class="btn btn-sm btn-light-primary"
                                                                 href="{{ asset($customer->images->where('name', 'account_statement')->first()->url) }}"
-                                                                download="{{ $customer->images->where('name', 'account_statement')->first()->name }}">
+                                                                download="{{ $customer->images->where('name', 'account_statement')->first()->url }}">
                                                                 <span class="svg-icon svg-icon-3">
                                                                     <svg width="24" height="24"
                                                                         viewBox="0 0 24 24" fill="none"
@@ -907,7 +989,7 @@
                                                         @if (!empty($customer->images->where('name', 'credit_inquiry')->first()))
                                                             <a class="btn btn-sm btn-light-primary"
                                                                 href="{{ asset($customer->images->where('name', 'credit_inquiry')->first()->url) }}"
-                                                                download="{{ $customer->images->where('name', 'credit_inquiry')->first()->name }}">
+                                                                download="{{ $customer->images->where('name', 'credit_inquiry')->first()->url }}">
                                                                 <span class="svg-icon svg-icon-3">
                                                                     <svg width="24" height="24"
                                                                         viewBox="0 0 24 24" fill="none"

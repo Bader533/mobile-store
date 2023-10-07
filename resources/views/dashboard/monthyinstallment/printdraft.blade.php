@@ -218,12 +218,8 @@
                 <p class="title">{{ $ar->utf8Glyphs('كمــــــبيــــــالة و الـــــــــدفع بـــــــها') }}</p><br>
                 <div id="draft_id" class="card-header border-0 pt-6">
 
+
                     <div class="card-price-number">
-
-                        {{-- <div class="price_all">
-                        <input type="text">
-
-                    </div> --}}
                         <div class="price_all">{{ $ar->utf8Glyphs('المـبلـغ') }}</div>
                         <div class="input_price"> <span>&#8362;</span>
                             {{ $monthyInstallment->price }}</div>
@@ -235,6 +231,7 @@
                     </div>
 
                 </div>
+
                 <div class="draft">
 
                     <p class="get_draft">
@@ -271,9 +268,7 @@
                         $formatter = new \NumberFormatter('ar', \NumberFormatter::SPELLOUT);
                         $letters_price = $formatter->format($number);
                         ?>
-
-                        {{ $ar->utf8Glyphs('فقط لا غير') }}
-                        {{ $ar->utf8Glyphs('شيكل') }}
+                        {{ $ar->utf8Glyphs('شيكل فقط لا غير') }}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {{ $ar->utf8Glyphs($letters_price) }}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

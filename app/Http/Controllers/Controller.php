@@ -28,10 +28,13 @@ class Controller extends BaseController
     {
         $month = Carbon::now()->month;
         $monthy = MonthyInstallment::whereMonth('pay_date', $month)->get();
-        $waiting = MonthyInstallment::where('status', '=', 'waiting')->get();
+
+        $waiting = $monthy->where('status', '=', 'waiting')->sum('price');
+        //
         $paidOnTime = $monthy->where('status', 'paid on time')->sum('price');
         $paidLate = $monthy->where('status', 'paid late')->sum('price');
         $paidEarly = $monthy->where('status', 'paid early')->sum('price');
+
         $orders = Order::whereNotNull('customer_id')->latest()->take(10)->get();
         $contracts = Contract::get();
         $priceSum = Order::withSum('product', 'price')->get()->sum('product_sum_price');
